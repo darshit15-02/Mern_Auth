@@ -11,9 +11,16 @@ const PORT = process.env.PORT || 4000;
 
 connectDB();
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://your-production-domain.com', // Replace with your production domain  
+];
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
+  origin: allowedOrigins,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
 
