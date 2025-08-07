@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 4000;
 connectDB();
 
 const allowedOrigins = [
-  'http://localhost:5173',
+  process.env.FRONTEND_URL,
   'https://your-production-domain.com', // Replace with your production domain  
 ];
 
