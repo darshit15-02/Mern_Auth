@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import  'dotenv/config';
+import helmet from 'helmet';
+import 'dotenv/config';
 import cookieParser from 'cookie-parser';
 import connectDB from './config/mongodb.js';
 import authRouter from './routes/authRoutes.js';
@@ -22,7 +23,13 @@ app.use(cors({
   origin: allowedOrigins,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
-}));
+}),
+  helmet({
+    contentSecurityPolicy: false,
+    frameguard: true
+  })
+
+);
 
 // API Endpoints
 app.get('/', (req, res) => res.send('Hello World!'));

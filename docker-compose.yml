@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  client:
+    build: client
+    container_name: client
+    ports:
+      - '5173:5173'
+    networks:
+      - app-network
+
+  server:
+    build: server
+    container_name: server
+    environment:
+      - MONGODB_URI=mongodb+srv://MernAuth:Ghjkl@cluster0.49uqq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      - JWT_SECRET=728710cc1f6d80ed8cfddaaa462d71aadd7ae186526a7b87efccb5f6e6951408
+      - NODE_ENV=development
+      - PORT= 4000
+      - SMTP_HOST=smtp-relay.brevo.com
+      - SMTP_PORT=587
+      - SMTP_USER=8df439003@smtp-brevo.com
+      - SMTP_PASS=RNmxKjT3DOAHs751
+      - FRONTEND_URL= http://localhost:5173/
+      - SENDER_EMAIL=darshit.jbs07@gmail.com
+    ports:
+      - '4000:4000'
+    command: [
+        'sh',
+        '-c',
+        'npm run seed:db admin@example.com admin123 && npm start'
+      ] # Default email and password arguments to database seed script - update your admin email and password
+    depends_on:
+      - mongo
+    networks:
+      - app-network
+
+  mongo:
+    image: mongo:latest
+    container_name: mongodb
+    command: mongod --quiet --logpath /dev/null
+    ports:
+      - '27017:27017'
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
