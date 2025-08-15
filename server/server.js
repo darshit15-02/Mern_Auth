@@ -14,7 +14,6 @@ connectDB();
 
 const allowedOrigins = [
   process.env.FRONTEND_URL,
-  'https://your-production-domain.com', // Replace with your production domain  
 ];
 
 app.use(express.json());
